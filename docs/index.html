@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KJV Words — Milk 45 Sources</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0f0f12;
+      --surface: #18181c;
+      --surface-hover: #222228;
+      --border: #2d2d35;
+      --text: #e4e4e7;
+      --text-muted: #a1a1aa;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+      --accent-soft: rgba(99, 102, 241, 0.15);
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --sidebar-width: 260px;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      display: grid;
+      grid-template-columns: var(--sidebar-width) 1fr;
+      min-height: 100vh;
+    }
+
+    /* ----- Sidebar ----- */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+    }
+
+    .sidebar-header {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .sidebar-header a {
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+
+    .sidebar-header a:hover {
+      color: var(--accent);
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: 0.75rem 0;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .sidebar-nav::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar-nav::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar-nav::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+
+    .nav-section {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      padding: 0.5rem 1rem 0.25rem;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 0.5rem 1rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      border-left: 2px solid transparent;
+      margin-left: 0;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--surface-hover);
+    }
+
+    .nav-link.active {
+      color: var(--accent);
+      border-left-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* ----- Main content ----- */
+    main {
+      grid-column: 2;
+      min-height: 100vh;
+      padding: 2rem 3rem 4rem;
+      margin-left: var(--sidebar-width);
+    }
+
+    section {
+      scroll-margin-top: 1rem;
+      max-width: 720px;
+    }
+
+    section:not(:last-child) {
+      margin-bottom: 3rem;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin: 0 0 0.5rem;
+      background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin: 0 0 2rem;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 1rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin: 1.25rem 0 0.5rem;
+    }
+
+    p {
+      margin: 0 0 1rem;
+      color: var(--text-muted);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent-hover);
+      text-decoration: underline;
+    }
+
+    ul {
+      margin: 0 0 1rem;
+      padding-left: 1.25rem;
+      color: var(--text-muted);
+    }
+
+    li {
+      margin-bottom: 0.35rem;
+    }
+
+    /* Cards / content blocks */
+    .card-grid {
+      display: grid;
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-soft);
+    }
+
+    .card h4 {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .card p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+      margin: 1rem 0;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.65rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    td {
+      color: var(--text-muted);
+    }
+
+    tr:hover td {
+      color: var(--text);
+    }
+
+    /* Code */
+    code, .path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      background: var(--surface);
+      padding: 0.15em 0.4em;
+      border-radius: var(--radius-sm);
+      color: var(--accent);
+    }
+
+    pre {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem;
+      overflow-x: auto;
+      margin: 1rem 0;
+    }
+
+    pre code {
+      background: none;
+      padding: 0;
+      color: var(--text-muted);
+    }
+
+    /* Feature pills */
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+    }
+
+    .pill.green { background: rgba(34, 197, 94, 0.15); color: var(--green); border-color: rgba(34, 197, 94, 0.3); }
+    .pill.amber { background: rgba(245, 158, 11, 0.15); color: var(--amber); border-color: rgba(245, 158, 11, 0.3); }
+
+    /* ----- GitHub floating link ----- */
+    .github-float {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 200;
+    }
+
+    .github-float a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.65rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .github-float a:hover {
+      border-color: var(--accent);
+      background: var(--surface-hover);
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .github-float svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        max-height: 50vh;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .sidebar-nav {
+        max-height: 40vh;
+      }
+
+      main {
+        margin-left: 0;
+        padding: 1.5rem 1.25rem 5rem;
+      }
+
+      .github-float {
+        bottom: 1rem;
+        right: 1rem;
+      }
+    }
+  </style>
+</head>
+<body data-github-repo="henrynkoh/kjv-words-milk45">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <a href="#">KJV Words</a>
+    </div>
+    <nav class="sidebar-nav" aria-label="Page sections">
+      <div class="nav-section">Overview</div>
+      <a class="nav-link" href="#hero">Intro</a>
+      <a class="nav-link" href="#whats-inside">What's in this repo</a>
+      <a class="nav-link" href="#quick-start">Quick start</a>
+      <a class="nav-link" href="#content">Content overview</a>
+      <div class="nav-section">Resources</div>
+      <a class="nav-link" href="#docs">Docs</a>
+      <a class="nav-link" href="#features">Features</a>
+      <a class="nav-link" href="#tech">Tech</a>
+    </nav>
+  </aside>
+
+  <main>
+    <section id="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">KJV Words — Milk 45 Sources</h1>
+      <p class="subtitle">KJV Bible verses by topic and category from the KJV-RD-milk 45 sources. Share and discuss the Word in a way that fits your audience, situation, and level of Bible knowledge.</p>
+      <p>Inspired by the format and style of <a href="https://github.com/henrynkoh/kjv-faith-ai" target="_blank" rel="noopener">kjv-faith-ai</a>.</p>
+    </section>
+
+    <section id="whats-inside" aria-labelledby="whats-title">
+      <h2 id="whats-title">What's in this repo</h2>
+      <div class="card-grid">
+        <div class="card">
+          <h4>KJV-RD-milk45-COMBINED-REPORT.md</h4>
+          <p>Single copy-pastable report: sermon outlines and categorized verses (KJV + 흠정역 한글) for all 40 processed sources. Use it in Google Docs or elsewhere.</p>
+        </div>
+        <div class="card">
+          <h4>docs/</h4>
+          <p>Manual, tutorial, quickstarter, and ad copy for Facebook, Instagram, Threads, Blogger, Naver, Tistory, WordPress, newsletter, and email.</p>
+        </div>
+        <div class="card">
+          <h4>docs/ads/</h4>
+          <p>Ready-to-use ad copy for every platform. Replace <code>[YOUR_LINK]</code> and paste.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="quick-start" aria-labelledby="quick-title">
+      <h2 id="quick-title">Quick start</h2>
+      <ol style="margin: 0 0 1rem; padding-left: 1.25rem; color: var(--text-muted);">
+        <li style="margin-bottom: 0.5rem;"><strong style="color: var(--text);">Use the combined report</strong> — Open <span class="path">KJV-RD-milk45-COMBINED-REPORT.md</span>, copy what you need, paste into Google Docs. For black-on-white: set text color to black and File → Page setup → Page color → white.</li>
+        <li style="margin-bottom: 0.5rem;"><strong style="color: var(--text);">Run the app (when added)</strong> — <code>npm install</code> then <code>npm run dev</code>; open <a href="http://localhost:3000">http://localhost:3000</a>.</li>
+      </ol>
+    </section>
+
+    <section id="content" aria-labelledby="content-title">
+      <h2 id="content-title">Content overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>45 sources</strong></td>
+            <td>Transcripts from the KJV-RD-milk lecture series.</td>
+          </tr>
+          <tr>
+            <td><strong>40 processed</strong></td>
+            <td>Each has a full sermon outline and Bible verses grouped by two main messages.</td>
+          </tr>
+          <tr>
+            <td><strong>Format</strong></td>
+            <td>KJV verse → Korean (흠정역 한글성경전서) or a short essential message.</td>
+          </tr>
+          <tr>
+            <td><strong>Topics</strong></td>
+            <td>Rightly dividing Scripture, Jewish vs Gentile era, Paul's gospel, corporate Christ, faith, and related themes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="docs" aria-labelledby="docs-title">
+      <h2 id="docs-title">Docs</h2>
+      <ul>
+        <li><a href="MANUAL.md">Manual</a> — How to use the report and (when available) the app.</li>
+        <li><a href="TUTORIAL.md">Tutorial</a> — Step-by-step guide to topics, categories, and workflows.</li>
+        <li><a href="QUICKSTARTER.md">Quickstarter</a> — Get value in a few minutes.</li>
+        <li><a href="ads/">Ads</a> — Copy for Facebook, Instagram, Threads, Blogger, Naver, Tistory, WordPress, newsletter, email.</li>
+      </ul>
+    </section>
+
+    <section id="features" aria-labelledby="features-title">
+      <h2 id="features-title">Features</h2>
+      <div class="pills">
+        <span class="pill">40 sermon outlines</span>
+        <span class="pill">KJV + 흠정역 한글</span>
+        <span class="pill green">Two-message categories</span>
+        <span class="pill">Copy-pastable report</span>
+        <span class="pill amber">Ad copy for 9 platforms</span>
+        <span class="pill">Manual, tutorial, quickstarter</span>
+      </div>
+      <p>All verses are presented without redundancy or omission, structured by topic and category for different audiences and situations.</p>
+    </section>
+
+    <section id="tech" aria-labelledby="tech-title">
+      <h2 id="tech-title">Tech (planned)</h2>
+      <ul>
+        <li><strong>Next.js</strong> — App router, React.</li>
+        <li><strong>Content</strong> — Structured by topic/category; verses without redundancy or omission.</li>
+        <li><strong>Audience-aware</strong> — Adjust depth and presentation by situation and Bible knowledge.</li>
+      </ul>
+    </section>
+  </main>
+
+  <div class="github-float">
+    <a href="https://github.com/henrynkoh/kjv-words-milk45" target="_blank" rel="noopener" aria-label="View on GitHub">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+      View on GitHub
+    </a>
+  </div>
+
+  <script>
+    (function () {
+      var repo = document.body.getAttribute('data-github-repo');
+      if (repo) {
+        var link = document.querySelector('.github-float a');
+        if (link) link.href = 'https://github.com/' + repo;
+      }
+
+      var navLinks = document.querySelectorAll('.nav-link');
+      var sections = document.querySelectorAll('main section[id]');
+
+      function setActive() {
+        var scrollY = window.scrollY;
+        navLinks.forEach(function (l) { l.classList.remove('active'); });
+        sections.forEach(function (sec) {
+          var top = sec.offsetTop - 120;
+          var bottom = top + sec.offsetHeight;
+          if (scrollY >= top && scrollY < bottom) {
+            var id = sec.id;
+            var link = document.querySelector('.nav-link[href="#' + id + '"]');
+            if (link) link.classList.add('active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', setActive);
+      window.addEventListener('load', setActive);
+
+      navLinks.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+          var href = this.getAttribute('href');
+          if (href && href.startsWith('#')) {
+            var id = href.slice(1);
+            var el = document.getElementById(id);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
